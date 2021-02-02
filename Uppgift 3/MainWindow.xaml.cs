@@ -27,7 +27,7 @@ namespace Uppgift_3
 
         private bool IsBulky(int height, int width)
         {
-            if ((height + 2 * width) > 200)
+            if (2 * (height + width) > 200)
             {
                 return true;
             }
@@ -35,7 +35,7 @@ namespace Uppgift_3
                 return false;
         }
 
-        private double PriceCalculator(double weight)
+        private double CalculateFee(int height, int width, double weight)
         {
             double price = 0;
 
@@ -59,20 +59,19 @@ namespace Uppgift_3
             {
                 price = 298;
             }
+            if (IsBulky(height, width))
+            {
+                price *= 1.45;
+            }
             return price;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            double weight = double.Parse(txtWeight.Text);
             int height = int.Parse(txtHeight.Text);
             int width = int.Parse(txtWidth.Text);
-            double price = PriceCalculator(weight);
-
-            if (IsBulky(height, width))
-            {
-                price *= 1.45;
-            }
+            double weight = double.Parse(txtWeight.Text);
+            double price = CalculateFee(height, width, weight);
 
             MessageBox.Show($"Paketet väger {weight} kg och kostar {price} kr.");
         }

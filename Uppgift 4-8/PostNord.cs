@@ -9,37 +9,98 @@ namespace Uppgift_4_8
     class PostNord
     {
         public List<Mail> Letters { get; set; }
+        public List<Mail> SortedLetters { get; set; }  
 
         public PostNord()
         {
             Letters = new List<Mail>();
+            SortedLetters = new List<Mail>(); 
         }
 
-        //Uppgift 7
-        public List<Mail> SortLettersToOstersund(List<string> locationsInÖstersund)
+
+        //Uppgift 6 Test med postnummer
+        public void SortByDeliveryType()
         {
-            List<Mail> SortedList = new List<Mail>();
-
-            foreach (Mail mail in Letters)
+            char c;
+            foreach (Mail m in Letters)
             {
-
-                if (mail.County == "Jämtland")
+                for (int i = 0; i < m.PostalCode.Length; i++)
                 {
-                    SortedList.Add(mail);
-                }
-                else
-                {
-                    foreach (string s in locationsInÖstersund)
+                    if (i == 2)
                     {
-                        if (mail.Locality == s)
+                        c = m.PostalCode[i];
+                        if (c == '0')
                         {
-                            SortedList.Add(mail);
+                            m.DeliveryType = "Box";
+                        }
+                        else if (c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7')
+                        {
+                            m.DeliveryType = "Brevbäring";
+                        }
+                        else if (c == '8')
+                        {
+                            m.DeliveryType = "Svarspost";
+                        }
+                        else if (c == '9')
+                        {
+                            m.DeliveryType = "Tävlingspost";
                         }
                     }
                 }
             }
-            return SortedList;
         }
+
+        ////Uppgift 7
+        //public List<Mail> SortLettersToOstersund(List<string> locationsInÖstersund)
+        //{
+        //    List<Mail> SortedList = new List<Mail>();
+
+        //    foreach (Mail mail in Letters)
+        //    {
+
+        //        if (mail.County == "Jämtland")
+        //        {
+        //            SortedList.Add(mail);
+        //        }
+        //        else
+        //        {
+        //            foreach (string s in locationsInÖstersund)
+        //            {
+        //                if (mail.Locality == s)
+        //                {
+        //                    SortedList.Add(mail);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return SortedList;
+        //}
+
+
+        //Uppgift 7 UPPDATERAD
+        public void SortLettersToOstersund2(Mail m)
+        {
+            List<string> locationsInOstersund = new List<string>() { "Berge", "Bjärme", "Bodal", "Bringåsen", "Brunflo", "Bye", "Böle", "Digernäs", "Erikslund", "Fannbyn", "Fillsta", "Fjäl", "Fåker", "Genvalla", "Gilleråsen", "Gusta", "Gärde", "Handog", "Hara", "Hegled", "Hornsberg", "Husås", "Häggenås", "Härke", "Klocksåsen", "Kläppe", "Klösta", "Knytta", "Lit", "Loke", "Lunne", "Marieby", "Munkflohögen", "målsta", "Norderåsen", "Nyvik", "Näs", "Ope", "Optand", "Orrviken", "Ringsta", "Rossbol", "Sandviken", "Singsjön", "Sjör", "Skickja", "Skute", "Slandrom", "Solberg", "Tandsbyn", "Torvalla by", "Valla", "Åkre", "Ångsta", "Ängsmon", "Östersund", "Österåsen" };
+
+            if (m.County == "Jämtland")
+            {
+                SortedLetters.Add(m);
+                Letters.Remove(m);
+            }
+            else
+            {
+                foreach (string s in locationsInOstersund)
+                {
+                    if (m.Locality == s)
+                    {
+                        SortedLetters.Add(m);
+                        Letters.Remove(m);
+                    }
+                }
+            }
+        }
+
+
 
             //Uppgift 8
             public List<Mail> NominateWinners()

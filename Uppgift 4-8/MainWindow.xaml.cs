@@ -41,7 +41,7 @@ namespace Uppgift_4_8
                 {
                     Name = txtName.Text,
                     StreetAddress = txtStreet.Text,
-                    PostalCode = int.Parse(txtPostalCode.Text),
+                    PostalCode = txtPostalCode.Text,
                     Locality = txtCity.Text,
                     County = txtCounty.Text,
                 };
@@ -56,10 +56,14 @@ namespace Uppgift_4_8
         //Uppgift 7 (testsyfte)
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            List<string> locationsInOstersund = new List<string>() { "Berge", "Bjärme", "Bodal", "Bringåsen", "Brunflo", "Bye", "Böle", "Digernäs", "Erikslund", "Fannbyn", "Fillsta", "Fjäl", "Fåker", "Genvalla", "Gilleråsen", "Gusta", "Gärde", "Handog", "Hara", "Hegled", "Hornsberg", "Husås", "Häggenås", "Härke", "Klocksåsen", "Kläppe", "Klösta", "Knytta", "Lit", "Loke", "Lunne", "Marieby", "Munkflohögen", "målsta", "Norderåsen", "Nyvik", "Näs", "Ope", "Optand", "Orrviken", "Ringsta", "Rossbol", "Sandviken", "Singsjön", "Sjör", "Skickja", "Skute", "Slandrom", "Solberg", "Tandsbyn", "Torvalla by", "Valla", "Åkre", "Ångsta", "Ängsmon", "Östersund", "Österåsen" };
+            SelectedMail = (Mail)lstLetters.SelectedItem;
 
+            postnord.SortLettersToOstersund2(SelectedMail);
+
+            lstLetters.Items.Refresh();
+            lstLetters.ItemsSource = postnord.Letters;
             lstLetters2.Items.Refresh();
-            lstLetters2.ItemsSource = postnord.SortLettersToOstersund(locationsInOstersund);
+            lstLetters2.ItemsSource = postnord.SortedLetters;
         }
 
         //Uppgift 8a (testsyfte)
@@ -81,6 +85,15 @@ namespace Uppgift_4_8
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(postnord.ShowWinners());
+        }
+
+
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            postnord.SortByDeliveryType();
+            lstLetters.Items.Refresh();
+            lstLetters.ItemsSource = postnord.Letters;
         }
     }
 }
